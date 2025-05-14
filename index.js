@@ -1,10 +1,8 @@
 const express = require('express')
-const cors = require('cors')
 
 const app = express()
 
 app.use(express.json())
-app.use(cors())
 app.use(express.static('dist'))
 
 const requestLogger = (request, response, next) => {
@@ -63,6 +61,7 @@ app.delete('/api/notes/:id', (request, response) => {
 })
 
 const generateId = () => {
+    console.log(notes.map(n => Number(n.id)))
     const maxId = notes.length > 0 
         ? Math.max(...notes.map(n => Number(n.id)))
         : 0
@@ -85,7 +84,7 @@ app.post('/api/notes', (request, response) => {
     }
 
     console.log(note)
-    notes.concat(note)
+    notes = notes.concat(note)
     response.json(note)
 })
 
